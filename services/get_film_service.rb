@@ -32,7 +32,7 @@ class GetFilmService
           title: item.td(class: 'name').text,
           logo: '',
           stream_url: item.link.href,
-          description: "#{item.td(class: 'name').text} - #{item.link.text.gsub('Скачать ', '')}"
+          description: "#{item.td(class: 'name').text} - #{item.link.text.gsub('Скачать ', '')}".prepend("<div>#{browser.div(class: 'info').text}</div>")
       }
     end
 

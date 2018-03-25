@@ -32,7 +32,7 @@ class ParserService
           title: item.text,
           logo: '',
           playlist_url: path_helper("get_url/#{item.link.href.split('/').last}"),
-          description: item.image.src
+          description: "<img src='#{item.image.src}'>"
       }
     end
 
