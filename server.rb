@@ -25,10 +25,11 @@ get '/start.json' do
               description: 'Недавно добавленные фильмы'
           },
           {
-              title: 'Поиск',
+              title: "Поиск",
+              search_on: "Поиск по каталогу",
+              logo: '',
               playlist_url: path_helper('search'),
-              description: 'Поиск по каталогу',
-              logo: 'logos/search.png'
+              description: "Поиск по всему каталогу Video.Melan"
           }
       ]
   }
@@ -42,10 +43,10 @@ get '/new.json' do
   }.to_json
 end
 
-get '/search' do
+get '/search.json' do
   {
       playlist_name: 'Результаты поиска',
-      channels: RestGetter.new(params[:q]).call
+      channels: RestGetter.new(params[:search]).call
   }.to_json
 end
 
