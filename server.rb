@@ -37,10 +37,12 @@ get '/start.json' do
 end
 
 get '/new.json' do
-  {
-      playlist_name: 'Новые',
-      channels: FetcherService.new(:new).call
-  }.to_json
+  Cachy.cache(:new_films, expires_in: (30 * 60)) do
+    {
+        playlist_name: 'Новые',
+        channels: FetcherService.new(:new).call
+    }.to_json
+  end
 end
 
 get '/search.json' do

@@ -10,7 +10,7 @@ class RestGetter
 
   def call
     parsed = JSON.parse(response)
-    parsed['json'][0]['response']['movies'].map do |movie|
+    result = parsed['json'][0]['response']['movies'].map do |movie|
       {
           title: movie['name'],
           logo: '',
@@ -18,6 +18,8 @@ class RestGetter
           description: "<img src='#{ParserService::BASE_URL}#{movie['cover']}'>"
       }
     end
+
+    result.empty? ? fallback : result
   end
 
   private
@@ -26,6 +28,17 @@ class RestGetter
 
   def response
     @response ||= RestClient.get(URL, { params: { q: query } })
+  end
+
+  def fallback
+    [
+        {
+            title: 'Ничего не найдено',
+            logo: '',
+            playlist_url: '',
+            description: ""
+        }
+    ]
   end
 
 end
