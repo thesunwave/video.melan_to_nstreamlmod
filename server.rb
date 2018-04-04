@@ -20,6 +20,11 @@ get '/start.json' do
       playlist_name: 'Video.Melan',
       channels: [
           {
+              title: 'Главная',
+              playlist_url: path_helper('main'),
+              description: 'Фильмы с главной'
+          },
+          {
               title: 'Новые',
               playlist_url: path_helper('new'),
               description: 'Недавно добавленные фильмы'
@@ -30,19 +35,32 @@ get '/start.json' do
               logo: '',
               playlist_url: path_helper('search'),
               description: "Поиск по всему каталогу Video.Melan"
+          },
+          {
+              title: 'item',
+              logo: '',
+              stream_url: 'https://video.english-films.com/the_matrix_1999_eng.mp4',
+              description: ""
           }
       ]
   }
   result.to_json
 end
 
-get '/new.json' do
-  Cachy.cache(:new_films, expires_in: (30 * 60)) do
+get '/main.json' do
+  Cachy.cache(:main_films, expires_in: (30 * 60)) do
     {
-        playlist_name: 'Новые',
-        channels: FetcherService.new(:new).call
+        playlist_name: 'Главная',
+        channels: FetcherService.new(:main).call
     }.to_json
   end
+end
+
+get '/new.json' do
+    {
+        playlist_name: 'Недавно добавленные',
+        channels: FetcherService.new(:new).call
+    }.to_json
 end
 
 get '/search.json' do

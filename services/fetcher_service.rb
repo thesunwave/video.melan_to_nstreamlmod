@@ -22,10 +22,12 @@ class FetcherService
 
   def get_html
     case @kind
-      when :new
+      when :main
         ParserService.new.call
       when :get_film
         GetFilmService.new(@movie_url).call
+      when :new
+        FromRssService.new.call
       else
         {}
     end
