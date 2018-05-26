@@ -1,13 +1,14 @@
 require 'oj'
-require 'pry'
 require 'watir'
 require 'pstore'
+require 'headless'
 
 class ParserService
 
   BASE_URL = 'http://video.melan/'
 
   def initialize(path = nil)
+    @headless = Headless.new
     @browser = Watir::Browser.new
     @path = path
   end
@@ -18,9 +19,10 @@ class ParserService
 
   private
 
-  attr_reader :browser, :path
+  attr_reader :browser, :path, :headless
 
   def parse
+    headless.start
     browser.goto BASE_URL
 
     while browser.execute_script("return jQuery('.item').size()") == 0
@@ -37,6 +39,8 @@ class ParserService
     end
 
     browser.quit
+    headless.destroy
+
     result
   end
 end

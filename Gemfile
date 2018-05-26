@@ -5,13 +5,15 @@ ruby '2.4.3'
 gem 'sinatra'
 gem 'nokogiri'
 gem 'oj'
-gem 'shotgun'
+gem 'shotgun', group: :development
 gem 'rest-client'
-gem 'mechanize'
 gem 'thin'
 gem 'cachy'
 gem 'redis'
 gem 'moneta'
 gem 'watir'
+gem 'headless'
 
-gem 'pry-byebug'
+gem "capistrano"
+
+gem 'pry-byebug', group: :development
