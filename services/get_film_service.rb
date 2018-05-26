@@ -8,7 +8,7 @@ class GetFilmService
 
   def initialize(path = nil)
     @headless = Headless.new
-    @browser = Watir::Browser.new
+    @browser = Watir::Browser.new :firefox
     @path = path
   end
 
