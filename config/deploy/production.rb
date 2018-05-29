@@ -26,6 +26,8 @@ namespace :deploy do
   end
 end
 
+after 'deploy:publishing', 'deploy:restart'
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.

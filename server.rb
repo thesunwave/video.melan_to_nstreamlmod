@@ -39,7 +39,7 @@ get '/start.json' do
           {
               title: 'item',
               logo: '',
-              stream_url: 'https://video.english-films.com/the_matrix_1999_eng.mp4',
+              stream_url: 'http://192.168.10.11/kino.mp4',
               description: ""
           }
       ]

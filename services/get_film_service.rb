@@ -7,8 +7,11 @@ class GetFilmService
   BASE_URL = "http://video.melan/#/movie/id/%{movie_id}"
 
   def initialize(path = nil)
-    @headless = Headless.new
-    @browser = Watir::Browser.new :firefox
+    if RUBY_PLATFORM.match(/arm/)
+      @browser = Watir::Browser.new :chrome, headless: true, options: {args: ['disable-gpu'], binary: "/usr/bin/chromium"}
+    else
+      @browser = Watir::Browser.new :chrome, headless: true
+    end
     @path = path
   end
 
@@ -18,10 +21,9 @@ class GetFilmService
 
   private
 
-  attr_reader :browser, :path, :headless
+  attr_reader :browser, :path
 
   def parse
-    headless.start
     browser.goto BASE_URL % {movie_id: path}
 
     while browser.execute_script("return jQuery('.files').size()") == 0
@@ -40,8 +42,6 @@ class GetFilmService
     title = browser.title.split('/')[0..1].join(' - ')
 
     browser.quit
-    headless.destroy
-
     [result, title]
   end
 end

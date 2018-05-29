@@ -8,8 +8,11 @@ class ParserService
   BASE_URL = 'http://video.melan/'
 
   def initialize(path = nil)
-    @headless = Headless.new
-    @browser = Watir::Browser.new :firefox
+    if RUBY_PLATFORM.match(/arm/)
+      @browser = Watir::Browser.new :chrome, headless: true, options: {args: ['disable-gpu'], binary: "/usr/bin/chromium"}
+    else
+      @browser = Watir::Browser.new :chrome, headless: true
+    end
     @path = path
   end
 
@@ -19,10 +22,9 @@ class ParserService
 
   private
 
-  attr_reader :browser, :path, :headless
+  attr_reader :browser, :path
 
   def parse
-    headless.start
     browser.goto BASE_URL
 
     while browser.execute_script("return jQuery('.item').size()") == 0
@@ -39,8 +41,6 @@ class ParserService
     end
 
     browser.quit
-    headless.destroy
-
     result
   end
 end
