@@ -3,30 +3,8 @@ set :deploy_to, "/home/developer/www/video_melan"
 server "192.168.10.11", user: "developer", roles: %w{app web}
 
 # Generate an additional task to fire up the thin clusters
-namespace :deploy do
-  desc "Start the Thin processes"
-  task :start do
-    run  <<-CMD
-      cd /home/developer/www/apps/current; bundle exec thin start -C config/thin.yml
-    CMD
-  end
 
-  desc "Stop the Thin processes"
-  task :stop do
-    run <<-CMD
-      cd /home/developer/www/apps/current; bundle exec thin stop -C config/thin.yml
-    CMD
-  end
-
-  desc "Restart the Thin processes"
-  task :restart do
-    run <<-CMD
-      cd /home/developer/www/apps/current; bundle exec thin restart -C config/thin.yml
-    CMD
-  end
-end
-
-after 'deploy:publishing', 'deploy:restart'
+after 'deploy:publishing', 'thin:restart'
 
 # server-based syntax
 # ======================

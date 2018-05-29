@@ -17,5 +17,6 @@ gem 'headless'
 gem "capistrano"
 gem 'capistrano-rvm'
 gem 'capistrano-bundler', '~> 1.3'
+gem 'capistrano-thin', '~> 2.0.0'
 
 gem 'pry-byebug', group: :development
