@@ -24,7 +24,7 @@ set :thin_config_path, -> { "#{shared_path}/config/thin.yml" }
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/thin.yml"
+append :linked_files, "config/thin.yml", "config/puma.rb"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "config"
