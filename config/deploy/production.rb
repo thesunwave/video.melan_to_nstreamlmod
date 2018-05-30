@@ -4,7 +4,7 @@ server "192.168.10.11", user: "developer", roles: %w{app web}
 
 # Generate an additional task to fire up the thin clusters
 
-after 'deploy:publishing', 'thin:restart'
+after 'deploy:publishing', 'puma:restart'
 
 # server-based syntax
 # ======================

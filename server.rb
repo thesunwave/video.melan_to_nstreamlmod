@@ -1,6 +1,8 @@
 require 'sinatra'
 require './cache_store'
 
+configure { set :server, :puma }
+
 include CacheStore
 
 Dir["./services/*.rb"].each { |f| require f }
