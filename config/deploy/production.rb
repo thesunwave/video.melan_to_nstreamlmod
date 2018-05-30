@@ -2,9 +2,9 @@ set :deploy_to, "/home/developer/www/video_melan"
 
 server "192.168.10.11", user: "developer", roles: %w{app web}
 
-# Generate an additional task to fire up the thin clusters
+set :stage,           :production
 
-after 'deploy:publishing', 'puma:restart'
+# Generate an additional task to fire up the thin clusters
 
 # server-based syntax
 # ======================
