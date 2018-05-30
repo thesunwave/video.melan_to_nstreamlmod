@@ -1,6 +1,5 @@
 require 'nokogiri'
 require 'oj'
-require 'mechanize'
 require 'rest-client'
 require 'redis'
 require 'cachy'

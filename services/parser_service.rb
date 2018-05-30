@@ -1,14 +1,18 @@
 require 'oj'
-require 'pry'
 require 'watir'
 require 'pstore'
+require 'headless'
 
 class ParserService
 
   BASE_URL = 'http://video.melan/'
 
   def initialize(path = nil)
-    @browser = Watir::Browser.new
+    if RUBY_PLATFORM.match(/arm/)
+      @browser = Watir::Browser.new :chrome, headless: true, options: {args: ['disable-gpu'], binary: "/usr/bin/chromium"}
+    else
+      @browser = Watir::Browser.new :chrome, headless: true
+    end
     @path = path
   end
 

@@ -1,5 +1,4 @@
 require 'oj'
-require 'pry'
 require 'watir'
 require 'pstore'
 
@@ -8,7 +7,11 @@ class GetFilmService
   BASE_URL = "http://video.melan/#/movie/id/%{movie_id}"
 
   def initialize(path = nil)
-    @browser = Watir::Browser.new
+    if RUBY_PLATFORM.match(/arm/)
+      @browser = Watir::Browser.new :chrome, headless: true, options: {args: ['disable-gpu'], binary: "/usr/bin/chromium"}
+    else
+      @browser = Watir::Browser.new :chrome, headless: true
+    end
     @path = path
   end
 
