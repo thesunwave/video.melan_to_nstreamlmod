@@ -26,7 +26,8 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 append :linked_files, "config/puma.rb"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "config"
+# append :linked_dirs, "log", "config"
+set :linked_dirs, %w(tmp/pids tmp/sockets log)
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -48,7 +49,7 @@ set :puma_workers,    0
 
 # Don't change these unless you know what you're doing
 
-set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
+set :puma_bind,       "unix://#{shared_path}/tmp/sockets/puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
 set :puma_access_log, "#{release_path}/log/puma.error.log"
