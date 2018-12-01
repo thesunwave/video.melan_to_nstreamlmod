@@ -8,11 +8,11 @@ class ParserService
   BASE_URL = 'http://video.melan/'
 
   def initialize(path = nil)
-    if RUBY_PLATFORM.match(/arm/)
-      @browser = Watir::Browser.new :chrome, headless: true, options: {args: ['disable-gpu'], binary: "/usr/bin/chromium"}
-    else
-      @browser = Watir::Browser.new :chrome, headless: true
-    end
+    # if RUBY_PLATFORM.match(/arm/)
+    @browser = Watir::Browser.new :chrome, headless: true, options: { args: ['disable-gpu', 'no-sandbox', 'disable-dev-shm-usage'], binary: "/usr/bin/chromium" }
+    # else
+      # @browser = Watir::Browser.new :chrome, headless: true
+    # end
     @path = path
   end
 
