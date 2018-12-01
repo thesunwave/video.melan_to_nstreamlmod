@@ -34,7 +34,7 @@ class GetFilmService
       {
           title: item.td(class: 'name').text,
           logo: '',
-          stream_url: "#{item.link.href.gsub('video.melan', '192.168.10.11:9393')}.kek",
+          stream_url: "#{item.link.href.gsub('video.melan', '192.168.0.104:9393')}",
           description: "#{item.td(class: 'name').text} - #{item.link.text.gsub('Скачать ', '')}".prepend("<div>#{browser.div(class: 'info').text}</div>")
       }
     end
