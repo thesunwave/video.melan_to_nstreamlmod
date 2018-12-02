@@ -16,7 +16,7 @@ gem 'headless'
 
 gem "capistrano"
 gem 'capistrano-rvm'
-gem 'capistrano-bundler', '~> 1.3'
+gem 'capistrano-bundler', '~> 1.4'
 gem 'capistrano3-puma', github: "seuros/capistrano-puma"
 
 gem 'pry-byebug', group: :development
