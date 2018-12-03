@@ -15,7 +15,7 @@ GEM
     byebug (10.0.0)
     cachy (0.4.2)
       mini_memory_store
-    capistrano (3.10.2)
+    capistrano (3.11.0)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
