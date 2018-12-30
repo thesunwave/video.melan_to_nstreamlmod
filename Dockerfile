@@ -1,4 +1,4 @@
-FROM ruby:2.5.1
+FROM arm64v8/ruby:2.5.1
 
 RUN apt-get update && apt-get install git make ruby-dev gcc libffi-dev -yy
 
@@ -30,7 +30,7 @@ ENV RACK_ENV=production
 COPY Gemfile /www/video_melan/Gemfile
 COPY Gemfile.lock /www/video_melan/Gemfile.lock
 WORKDIR /www/video_melan
-RUN bundle install
+RUN bundle install --without development test --retry 10 --jobs 10
 
 # Now add the rest of the files
 COPY . /www/video_melan
