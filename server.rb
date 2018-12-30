@@ -10,7 +10,7 @@ Dir["./services/*.rb"].each { |f| require f }
 Cachy.cache_store = CacheStore.store
 
 def path_helper(path)
-  "http://192.168.10.11:9393/#{path}.json"
+  "http://192.168.0.104:9393/#{path}.json"
 end
 
 get '/' do
@@ -41,7 +41,7 @@ get '/start.json' do
           {
               title: 'item',
               logo: '',
-              stream_url: 'http://192.168.10.11/kino.mp4',
+              stream_url: 'http://192.168.0.104/kino.mp4',
               description: ""
           }
       ]
