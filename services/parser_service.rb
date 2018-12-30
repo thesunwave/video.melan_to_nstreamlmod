@@ -1,19 +1,19 @@
 require 'oj'
 require 'watir'
 require 'pstore'
-require 'headless'
 
 class ParserService
 
   BASE_URL = 'http://video.melan/'
 
-  def initialize(path = nil)
+  def initialize(path = nil, hostname: nil)
     # if RUBY_PLATFORM.match(/arm/)
     @browser = Watir::Browser.new :chrome, headless: true, options: { args: ['disable-gpu', 'no-sandbox', 'disable-dev-shm-usage'], binary: "/usr/bin/chromium" }
     # else
       # @browser = Watir::Browser.new :chrome, headless: true
     # end
     @path = path
+    @hostname = hostname
   end
 
   def call
@@ -35,7 +35,7 @@ class ParserService
       {
           title: item.text,
           logo: '',
-          playlist_url: path_helper("get_url/#{item.link.href.split('/').last}"),
+          playlist_url: path_helper(hostname, "get_url/#{item.link.href.split('/').last}"),
           description: "<img src='#{item.image.src}'>"
       }
     end

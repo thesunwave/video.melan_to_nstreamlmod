@@ -9,8 +9,12 @@ Dir["./services/*.rb"].each { |f| require f }
 
 Cachy.cache_store = CacheStore.store
 
-def path_helper(path)
-  "http://192.168.0.104:9393/#{path}.json"
+def host_name(request)
+  "#{request.scheme}://#{request.host}:#{request.port}"
+end
+
+def path_helper(hostname, path)
+  "#{hostname}/#{path}.json"
 end
 
 get '/' do
@@ -23,25 +27,25 @@ get '/start.json' do
       channels: [
           {
               title: 'Главная',
-              playlist_url: path_helper('main'),
+              playlist_url: path_helper(host_name(request), 'main'),
               description: 'Фильмы с главной'
           },
           {
               title: 'Новые',
-              playlist_url: path_helper('new'),
+              playlist_url: path_helper(host_name(request), 'new'),
               description: 'Недавно добавленные фильмы'
           },
           {
               title: "Поиск",
               search_on: "Поиск по каталогу",
               logo: '',
-              playlist_url: path_helper('search'),
+              playlist_url: path_helper(host_name(request), 'search'),
               description: "Поиск по всему каталогу Video.Melan"
           },
           {
               title: 'item',
               logo: '',
-              stream_url: 'http://192.168.0.104/kino.mp4',
+              stream_url: "#{host_name(request)}/kino.mp4",
               description: ""
           }
       ]
@@ -50,10 +54,10 @@ get '/start.json' do
 end
 
 get '/main.json' do
-  Cachy.cache(:main_films, expires_in: (30 * 60)) do
+  Cachy.cache(:main_films, expires_in: 1800) do
     {
         playlist_name: 'Главная',
-        channels: FetcherService.new(:main).call
+        channels: FetcherService.new(:main, hostname: host_name(request)).call
     }.to_json
   end
 end
@@ -61,20 +65,20 @@ end
 get '/new.json' do
     {
         playlist_name: 'Недавно добавленные',
-        channels: FetcherService.new(:new).call
+        channels: FetcherService.new(:new, hostname: host_name(request)).call
     }.to_json
 end
 
 get '/search.json' do
   {
       playlist_name: 'Результаты поиска',
-      channels: RestGetter.new(params[:search]).call
+      channels: RestGetter.new(params[:search], hostname: host_name(request)).call
   }.to_json
 end
 
 get '/get_url/:film_id' do
   Cachy.cache(params[:film_id]) do
-    result = FetcherService.new(:get_film, params[:film_id].split('.').first).call
+    result = FetcherService.new(:get_film, params[:film_id].split('.').first, hostname: host_name(request)).call
     {
         playlist_name: result[1],
         channels: result[0]

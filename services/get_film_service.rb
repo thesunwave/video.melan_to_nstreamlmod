@@ -6,13 +6,14 @@ class GetFilmService
 
   BASE_URL = "http://video.melan/#/movie/id/%{movie_id}"
 
-  def initialize(path = nil)
+  def initialize(path = nil, hostname = nil)
     # if RUBY_PLATFORM.match(/arm/)
       @browser = Watir::Browser.new :chrome, headless: true, options: { args: ['disable-gpu', 'no-sandbox', 'disable-dev-shm-usage'], binary: "/usr/bin/chromium" }
     # else
       # @browser = Watir::Browser.new :chrome, headless: true
     # end
     @path = path
+    @hostname = hostname
   end
 
   def call
@@ -21,7 +22,7 @@ class GetFilmService
 
   private
 
-  attr_reader :browser, :path
+  attr_reader :browser, :path, :hostname
 
   def parse
     browser.goto BASE_URL % {movie_id: path}
@@ -34,7 +35,7 @@ class GetFilmService
       {
           title: item.td(class: 'name').text,
           logo: '',
-          stream_url: "#{item.link.href.gsub('video.melan', '192.168.0.104:9393')}",
+          stream_url: "#{item.link.href.gsub('video.melan', hostname)}",
           description: "#{item.td(class: 'name').text} - #{item.link.text.gsub('Скачать ', '')}".prepend("<div>#{browser.div(class: 'info').text}</div>")
       }
     end

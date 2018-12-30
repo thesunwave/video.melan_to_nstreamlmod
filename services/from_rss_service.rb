@@ -2,8 +2,9 @@ require 'nokogiri'
 require 'rest-client'
 
 class FromRssService
-  def initialize
+  def initialize(hostname: nil)
     @url = "#{ParserService::BASE_URL}/rss_films.php"
+    @hostname = hostname
   end
 
   def call
@@ -11,7 +12,7 @@ class FromRssService
       {
           title: item.at_xpath('title').content,
           logo: '',
-          playlist_url: path_helper("get_url/#{film_id(item)}"),
+          playlist_url: path_helper(hostname, "get_url/#{film_id(item)}"),
           description: item.at_xpath('content:encoded').content
       }
     end
@@ -19,7 +20,7 @@ class FromRssService
 
   private
 
-  attr_reader :url
+  attr_reader :url, :hostname
 
   def response
     @response ||= Nokogiri::XML(RestClient.get(url))

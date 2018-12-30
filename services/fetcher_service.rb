@@ -1,16 +1,16 @@
 require 'nokogiri'
 require 'oj'
 require 'rest-client'
-require 'redis'
 require 'cachy'
 
 class FetcherService
 
   BASE_URL = 'http://video.melan/'
 
-  def initialize(kind, movie_id = nil)
+  def initialize(kind, movie_id = nil, hostname: nil)
     @kind = kind
     @movie_url = movie_id
+    @hostname = hostname
   end
 
   def call
@@ -22,11 +22,11 @@ class FetcherService
   def get_html
     case @kind
       when :main
-        ParserService.new.call
+        ParserService.new(hostname: @hostname).call
       when :get_film
-        GetFilmService.new(@movie_url).call
+        GetFilmService.new(@movie_url, hostname: @hostname).call
       when :new
-        FromRssService.new.call
+        FromRssService.new(hostname: @hostname).call
       else
         {}
     end
