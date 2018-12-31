@@ -14,7 +14,7 @@ gem 'watir'
 group :development do
   gem "capistrano", '~> 3.10.2'
   gem 'capistrano-rvm'
-  gem 'capistrano-bundler', '~> 1.3'
+  gem 'capistrano-bundler', '~> 1.5'
   gem 'capistrano3-puma', github: "seuros/capistrano-puma"
   gem 'shotgun'
   gem 'pry-byebug'
