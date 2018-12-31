@@ -3,6 +3,7 @@ set :deploy_to, "/home/developer/www/video_melan"
 server "192.168.0.104", user: "developer", roles: %w{app web}
 
 set :stage,           :production
+set :rvm_ruby_version, '2.5.1'
 
 # Generate an additional task to fire up the thin clusters
 

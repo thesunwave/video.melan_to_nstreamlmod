@@ -22,7 +22,7 @@ class ParserService
 
   private
 
-  attr_reader :browser, :path
+  attr_reader :browser, :path, :hostname
 
   def parse
     browser.goto BASE_URL

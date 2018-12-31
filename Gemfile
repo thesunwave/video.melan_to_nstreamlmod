@@ -12,7 +12,7 @@ gem 'moneta'
 gem 'watir'
 
 group :development do
-  gem "capistrano"
+  gem "capistrano", '~> 3.10.2'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler', '~> 1.3'
   gem 'capistrano3-puma', github: "seuros/capistrano-puma"
